@@ -214,7 +214,7 @@ def convert(pptx_path, output_path=None):
 
         slide_content = "\n".join(elements)
         slides_html.append(
-            f'<section class="slide" style="{bg_style}">\n{slide_content}\n</section>'
+            f'<section class="slide" style="{bg_style}">\n<div class="slide-inner">\n{slide_content}\n</div>\n</section>'
         )
 
     title = "Presentation"
@@ -233,15 +233,33 @@ def convert(pptx_path, output_path=None):
 <title>{title}</title>
 <style>
 * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-html, body {{ height: 100%; overflow: hidden; }}
+html, body {{ height: 100%; overflow: hidden; background: #000; }}
 .slide {{
     width: 100vw; height: 100vh;
     display: none; position: relative;
     overflow: hidden;
 }}
-.slide.active {{ display: block; }}
+.slide.active {{ display: flex; align-items: center; justify-content: center; }}
+.slide-inner {{
+    position: relative;
+    width: 100vw; height: 100vh;
+    flex-shrink: 0;
+}}
+@media (max-aspect-ratio: 4/3) {{
+    .slide-inner {{
+        width: 100vw;
+        height: calc(100vw / {aspect_ratio:.4f});
+        max-height: 100vh;
+    }}
+}}
+@media (max-aspect-ratio: 4/3) and (min-height: calc(100vw / {aspect_ratio:.4f})) {{
+    .slide-inner {{
+        width: calc(100vh * {aspect_ratio:.4f});
+        height: 100vh;
+    }}
+}}
 .progress {{ position: fixed; bottom: 0; left: 0; height: 4px; background: #0366d6; transition: width 0.3s; z-index: 100; }}
-.counter {{ position: fixed; bottom: 12px; right: 20px; font-size: 14px; color: rgba(0,0,0,0.4); z-index: 100; }}
+.counter {{ position: fixed; bottom: 12px; right: 20px; font-size: 14px; color: rgba(255,255,255,0.4); z-index: 100; }}
 </style>
 </head>
 <body>
