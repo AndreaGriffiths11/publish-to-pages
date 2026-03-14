@@ -57,7 +57,7 @@ That's it. The agent reads the instructions, runs the scripts, and gives you a l
 |-------|--------------|
 | **HTML** (.html, .htm) | Published directly as-is |
 | **PPTX** (.pptx) | Converted to HTML with formatting, colors, images, and backgrounds preserved |
-| **PDF** (.pdf) | Converted via pandoc (optional dependency) |
+| **PDF** (.pdf) | Each page rendered as an image and embedded in a navigable HTML presentation |
 | **Google Slides** | Exported as PPTX, then converted to HTML |
 
 ## Repo Visibility
@@ -73,8 +73,8 @@ pip install python-pptx
 
 For PDF conversion:
 ```bash
-brew install pandoc      # macOS
-apt install pandoc       # Ubuntu/Debian
+brew install poppler       # macOS
+apt install poppler-utils  # Ubuntu/Debian
 ```
 
 The skill tells you if you need them — no setup required upfront.
@@ -87,7 +87,8 @@ publish-to-pages/
 ├── README.md             # This file
 └── scripts/
     ├── publish.sh        # Creates repo, pushes, enables Pages
-    └── convert-pptx.py   # Converts PPTX → HTML presentation
+    ├── convert-pptx.py   # Converts PPTX → HTML presentation
+    └── convert-pdf.py    # Converts PDF → HTML presentation
 ```
 
 ## Links
