@@ -236,27 +236,16 @@ def convert(pptx_path, output_path=None):
 html, body {{ height: 100%; overflow: hidden; background: #000; }}
 .slide {{
     width: 100vw; height: 100vh;
-    display: none; position: relative;
+    display: none;
+    align-items: center; justify-content: center;
     overflow: hidden;
 }}
-.slide.active {{ display: flex; align-items: center; justify-content: center; }}
+.slide.active {{ display: flex; }}
 .slide-inner {{
     position: relative;
-    width: 100vw; height: 100vh;
+    width: 1280px; height: {int(1280 / aspect_ratio)}px;
+    transform-origin: center center;
     flex-shrink: 0;
-}}
-@media (max-aspect-ratio: 4/3) {{
-    .slide-inner {{
-        width: 100vw;
-        height: calc(100vw / {aspect_ratio:.4f});
-        max-height: 100vh;
-    }}
-}}
-@media (max-aspect-ratio: 4/3) and (min-height: calc(100vw / {aspect_ratio:.4f})) {{
-    .slide-inner {{
-        width: calc(100vh * {aspect_ratio:.4f});
-        height: 100vh;
-    }}
 }}
 .progress {{ position: fixed; bottom: 0; left: 0; height: 4px; background: #0366d6; transition: width 0.3s; z-index: 100; }}
 .counter {{ position: fixed; bottom: 12px; right: 20px; font-size: 14px; color: rgba(255,255,255,0.4); z-index: 100; }}
@@ -291,6 +280,16 @@ document.addEventListener('click', e => {{
     else show(current - 1);
 }});
 show(0);
+function scaleSlides() {{
+    document.querySelectorAll('.slide-inner').forEach(inner => {{
+        const scaleX = window.innerWidth / inner.offsetWidth;
+        const scaleY = window.innerHeight / inner.offsetHeight;
+        const scale = Math.min(scaleX, scaleY);
+        inner.style.transform = 'scale(' + scale + ')';
+    }});
+}}
+window.addEventListener('resize', scaleSlides);
+scaleSlides();
 </script>
 </body></html>'''
 
