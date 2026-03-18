@@ -94,4 +94,4 @@ publish-to-pages/
 ## Links
 
 - [see a demo](https://andreagriffiths11.github.io/publish-to-pages-site/)
-- [awesome-copilot](https://github.com/github/awesome-copilot)
+- [awesome-copilot](https://github.com/github/awesome-copilot/tree/main/skills/publish-to-pages)
